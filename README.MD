@@ -1,5 +1,7 @@
 This is a simple little toy to generate sentences given some text as input. It makes sentences based on the probability of a word happening after a current word and runs until the current word has a "." in it.
 
+It requires the wikipedia library (pip install wikipedia)
+
 To use, try:
 
 ```

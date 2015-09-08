@@ -1,4 +1,10 @@
 import random
+import wikipedia
+
+
+wiki_pages = ["Linus Torvalds", "Sexual Intercourse"]
+
+
 
 class SentenceParser(object):
     def __init__(self):
@@ -36,3 +42,13 @@ class SentenceParser(object):
         with open(filename) as f:
             s = f.read().replace("\n", "")
             self.parse(s)
+
+    def parse_wiki_page(self, page=""):
+        if not page:
+            page = random.choice(wiki_pages)
+        p = wikipedia.page(page)
+        self.parse(p.content.replace("\n", "").replace("==",""))
+
+
+
+
