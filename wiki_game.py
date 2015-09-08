@@ -1,20 +1,18 @@
 import sentence
+import time
+
+print("Starting Wiki Game\n")
 
 wiki_pages = []
 
 with open("wikipedia_pages.txt") as pages:
     for line in pages:
-        wiki_pages.append(line)
+        wiki_pages.append(line.replace("\n", ""))
 
-sentence_generators = []
-
-for page in wiki_pages:
-    sentence_generators.append(sentence.SentenceGenerator())
-    try:
-        sentence_generators[-1].parse_wiki_page(page)
-    except:
-        del(sentence_generators[-1])
+sentence_generators = sentence.SentenceGenerator.create_wiki_generators(wiki_pages, True)
 
 
 for gen in sentence_generators:
-    print(gen.make_sentence())
+    print(gen[0])
+    print(gen[1].make_sentence())
+    print

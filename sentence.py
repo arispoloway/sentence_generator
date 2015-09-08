@@ -1,5 +1,6 @@
 import random
 import wikipedia
+import time
 
 class SentenceGenerator(object):
     def __init__(self):
@@ -45,7 +46,7 @@ class SentenceGenerator(object):
             cur_word = choice[0]
             sentence.append(cur_word)
 
-        return " ".join(sentence)
+        return " ".join(sentence).encode('ascii', 'ignore')
 
     def parse_file(self, filename):
         with open(filename) as f:
@@ -60,5 +61,25 @@ class SentenceGenerator(object):
 
     def reset(self):
         del(self.words)
+
+
+    @staticmethod
+    def create_wiki_generators(wiki_list, debug=False):
+        sentence_generators = []
+        for page in wiki_list:
+            sentence_generators.append( (page, SentenceGenerator()) )
+            try:
+                time_start = time.time()
+                sentence_generators[-1][1].parse_wiki_page(page)
+
+                if debug:
+                    print("Took {1} Seconds to load Wikipedia Page \"{0}\" ".format(page, str(time.time()-time_start)[:5]))
+            except:
+                del(sentence_generators[-1])
+                if debug:
+                    print("Failed to load Wikipedia Page \"{0}\" ".format(page.replace("\n", "")))
+
+        return sentence_generators
+
 
 
