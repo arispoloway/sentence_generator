@@ -14,7 +14,9 @@ class SentenceParser(object):
                     self.words[word][word_list[i+1]] = 0
                 self.words[word][word_list[i+1]] += 1
 
-    def make_sentence(self, start_word):
+    def make_sentence(self, start_word=""):
+        if start_word == "":
+            start_word = random.choice(list(self.words))
         if start_word not in self.words:
             return ("Initial word not in list of words")
         sentence = [start_word]
