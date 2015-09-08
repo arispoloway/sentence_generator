@@ -2,7 +2,7 @@ import random
 import wikipedia
 
 
-wiki_pages = ["Linus Torvalds"]
+wiki_pages = ["Linus Torvalds", "United States"]
 
 
 
@@ -19,6 +19,22 @@ class SentenceGenerator(object):
                 if word_list[i+1] not in self.words[word]:
                     self.words[word][word_list[i+1]] = 0
                 self.words[word][word_list[i+1]] += 1
+        self.recompute_probabilities()
+
+    def recompute_probabilities(self):
+        self.probabilities = {}
+        for word in self.words:
+            word_prob = []
+            total = 0
+            for w in self.words[word]:
+                total += self.words[word][w]
+            prob = 0.0
+            for w in self.words[word]:
+                prob += float(self.words[word][w])/float(total)
+                word_prob.append( (w, prob) )
+            self.probabilities[word] = word_prob
+
+
 
     def make_sentence(self, start_word=""):
         if not start_word:
@@ -28,12 +44,13 @@ class SentenceGenerator(object):
         sentence = [start_word]
         cur_word = start_word
 
-        while(not "." in cur_word):
-            choices = []
-            for choice in self.words[cur_word]:
-                for i in range(self.words[cur_word][choice]):
-                        choices.append(choice)
-            cur_word = random.choice(choices)
+        while "." not in cur_word:
+            rand = random.random()
+
+            for choice in self.probabilities[cur_word]:
+                if rand < choice[1]:
+                    break
+            cur_word = choice[0]
             sentence.append(cur_word)
 
         return " ".join(sentence)
