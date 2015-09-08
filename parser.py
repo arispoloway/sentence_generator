@@ -2,7 +2,7 @@ import random
 import wikipedia
 
 
-wiki_pages = ["Linus Torvalds", "Sexual Intercourse"]
+wiki_pages = ["Linus Torvalds"]
 
 
 
@@ -21,7 +21,7 @@ class SentenceParser(object):
                 self.words[word][word_list[i+1]] += 1
 
     def make_sentence(self, start_word=""):
-        if start_word == "":
+        if not start_word:
             start_word = random.choice(list(self.words))
         if start_word not in self.words:
             return ("Initial word not in list of words")
@@ -49,6 +49,7 @@ class SentenceParser(object):
         p = wikipedia.page(page)
         self.parse(p.content.replace("\n", "").replace("==",""))
 
-
+    def reset(self):
+        del(self.words)
 
 

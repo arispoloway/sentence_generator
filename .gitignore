@@ -1,2 +1,2 @@
-shakespeare.txt
-text.txt
+*.txt
+*.pyc
