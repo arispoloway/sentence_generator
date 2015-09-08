@@ -6,7 +6,7 @@ wiki_pages = ["Linus Torvalds"]
 
 
 
-class SentenceParser(object):
+class SentenceGenerator(object):
     def __init__(self):
         self.words = {}
 
