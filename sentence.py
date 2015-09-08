@@ -1,11 +1,6 @@
 import random
 import wikipedia
 
-
-wiki_pages = ["Linus Torvalds", "United States"]
-
-
-
 class SentenceGenerator(object):
     def __init__(self):
         self.words = {}
@@ -34,8 +29,6 @@ class SentenceGenerator(object):
                 word_prob.append( (w, prob) )
             self.probabilities[word] = word_prob
 
-
-
     def make_sentence(self, start_word=""):
         if not start_word:
             start_word = random.choice(list(self.words))
@@ -43,8 +36,7 @@ class SentenceGenerator(object):
             return ("Initial word not in list of words")
         sentence = [start_word]
         cur_word = start_word
-
-        while "." not in cur_word:
+        while not cur_word.endswith("."):
             rand = random.random()
 
             for choice in self.probabilities[cur_word]:
