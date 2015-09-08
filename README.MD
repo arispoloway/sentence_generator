@@ -5,9 +5,9 @@ It requires the wikipedia library (pip install wikipedia)
 To use, try:
 
 ```
-import parser
+import sentence
 
-p = parser.SentenceParser()
+p = sentence.SentenceGenerator()
 p.parse("PUT RANDOM TEXT HERE.")
 
 p.make_sentence("RANDOM")
