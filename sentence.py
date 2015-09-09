@@ -37,7 +37,7 @@ class SentenceGenerator(object):
 
     def make_sentence(self, start_word=""):
         if not start_word:
-            start_word = random.choice(self.entry_points if len(self.entry_points) > 0 else self.words)
+            start_word = random.choice(self.entry_points if len(self.entry_points) > 0 else self.words.keys)
         if start_word not in self.words:
             return ("Initial word not in list of words")
         sentence = [start_word]
