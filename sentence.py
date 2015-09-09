@@ -5,6 +5,7 @@ import time
 class SentenceGenerator(object):
     def __init__(self):
         self.words = {}
+        self.entry_points = []
 
     def parse(self, words):
         word_list = words.split(" ")
@@ -15,6 +16,10 @@ class SentenceGenerator(object):
                 if word_list[i+1] not in self.words[word]:
                     self.words[word][word_list[i+1]] = 0
                 self.words[word][word_list[i+1]] += 1
+            if i > 0:
+                if word_list[i - 1].endswith("."):
+                    if word not in self.entry_points:
+                        self.entry_points.append(word)
         self.recompute_probabilities()
 
     def recompute_probabilities(self):
@@ -32,7 +37,7 @@ class SentenceGenerator(object):
 
     def make_sentence(self, start_word=""):
         if not start_word:
-            start_word = random.choice(list(self.words))
+            start_word = random.choice(self.entry_points if len(self.entry_points) > 0 else list(self.words))
         if start_word not in self.words:
             return ("Initial word not in list of words")
         sentence = [start_word]
